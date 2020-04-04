@@ -15,9 +15,8 @@ namespace FunkyHospital.Api.Tests.DataAccess.Util
         public TestDataManager(DatabaseConfig databaseConfig)
         {
             var storageAccount = CloudStorageAccount.Parse(databaseConfig.ConnectionString);
-            var tableClient = storageAccount.CreateCloudTableClient();
 
-            _table = tableClient.GetTableReference(databaseConfig.TableName);
+            _table = storageAccount.CreateCloudTableClient().GetTableReference(databaseConfig.TableName);
             _table.CreateIfNotExistsAsync().Wait();
 
         }
