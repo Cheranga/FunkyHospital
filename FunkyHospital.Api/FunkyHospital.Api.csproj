@@ -6,6 +6,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="FluentValidation" Version="8.6.2" />
+    <PackageReference Include="Hatan.Azure.Functions.DependencyInjection.Extensions" Version="1.0.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="4.1.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.31" />
@@ -18,5 +19,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataAccess\Queries\" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using FunkyHospital.Api.Bootstrap;
+using FunkyHospital.Api.DataAccess.CommandHandlers;
+using FunkyHospital.Api.DataAccess.Commands;
 using FunkyHospital.Api.DTO;
 using FunkyHospital.Api.Mappers;
 using FunkyHospital.Api.Services;
 using FunkyHospital.Api.Validators;
+using Hatan.Azure.Functions.DependencyInjection.Extensions;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +24,28 @@ namespace FunkyHospital.Api.Bootstrap
             RegisterValidators(services);
             RegisterMappers(services);
             RegisterServices(services);
+            RegisterDataAccess(services);
+            RegisterConfigurations(services);
+        }
+
+        private void RegisterDataAccess(IServiceCollection services)
+        {
+            if (services == null)
+            {
+                return;
+            }
+
+            services.AddSingleton<ICommandHandler<CreateOrderCommand>, CreateOrderCommandHandler>();
+        }
+
+        private void RegisterConfigurations(IServiceCollection services)
+        {
+            if (services == null)
+            {
+                return;
+            }
+
+            services.RegisterConfiguration<DatabaseConfig>(ServiceLifetime.Singleton);
         }
 
         private void RegisterServices(IServiceCollection services)
@@ -43,6 +68,7 @@ namespace FunkyHospital.Api.Bootstrap
 
             services.AddSingleton<IValidator<CreateOrderDto>, CreateOrderDtoValidator>();
             services.AddSingleton<IValidator<GetOrderDto>, GetOrderDtoValidator>();
+            services.AddSingleton<IValidator<CreateOrderCommand>, CreateOrderCommandValidator>();
         }
 
         private void RegisterMappers(IServiceCollection services)

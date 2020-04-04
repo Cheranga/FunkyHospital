@@ -32,7 +32,7 @@ namespace FunkyHospital.Api.Functions
         [FunctionName(nameof(CreateOrderApiFunction))]
         public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "orders/create")]
             HttpRequest request,
-            [ServiceBus("%NewOrdersQueue%")]IAsyncCollector<CreateOrderRequest> orders)
+            [ServiceBus("%NewOrdersQueue%")]IAsyncCollector<CreateOrderDto> orders)
         {
             try
             {
@@ -44,14 +44,11 @@ namespace FunkyHospital.Api.Functions
                     return new BadRequestObjectResult("Invalid request.");
                 }
 
-                var orderRequest = _mapper.Map<CreateOrderRequest>(orderDto);
-                if (orderRequest == null)
-                {
-                    _logger.LogError($"Error when converting the create order DTO to create order request.");
-                    return new InternalServerErrorResult();
-                }
 
-                await orders.AddAsync(orderRequest).ConfigureAwait(false);
+                await orders.AddAsync(orderDto).ConfigureAwait(false);
+
+                return new OkObjectResult(orderDto.OrderId);
+
             }
             catch (Exception exception)
             {
