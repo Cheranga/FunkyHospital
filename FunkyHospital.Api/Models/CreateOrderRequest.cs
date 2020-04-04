@@ -8,6 +8,6 @@ namespace FunkyHospital.Api.Models
         public string PostCode { get; set; }
         public string MobileNumber { get; set; }
 
-        public string OrderId { get; } = Guid.NewGuid().ToString("N");
+        public string OrderId { get; set; }
     }
 }

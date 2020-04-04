@@ -7,6 +7,7 @@ namespace FunkyHospital.Api.Validators
     {
         public CreateOrderCommandValidator()
         {
+            RuleFor(x => x.OrderId).NotNull().NotEmpty();
             RuleFor(x => x.Name).NotNull().NotEmpty();
             RuleFor(x => x.MobileNumber).NotNull().NotEmpty();
             RuleFor(x => x.PostCode).NotNull().NotEmpty();

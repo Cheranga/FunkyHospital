@@ -44,7 +44,6 @@ namespace FunkyHospital.Api.Functions
                     return new BadRequestObjectResult("Invalid request.");
                 }
 
-
                 await orders.AddAsync(orderDto).ConfigureAwait(false);
 
                 return new OkObjectResult(orderDto.OrderId);
