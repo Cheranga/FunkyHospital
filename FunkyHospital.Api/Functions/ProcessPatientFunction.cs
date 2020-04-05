@@ -11,20 +11,20 @@ using Microsoft.Extensions.Logging;
 
 namespace FunkyHospital.Api.Functions
 {
-    public class CreateOrderFunction
+    public class ProcessPatientFunction
     {
-        private readonly ICreateOrderService _service;
+        private readonly IProcessPatientService _service;
         private readonly IMapper _mapper;
-        private readonly ILogger<CreateOrderFunction> _logger;
+        private readonly ILogger<ProcessPatientFunction> _logger;
 
-        public CreateOrderFunction(ICreateOrderService service, IMapper mapper, ILogger<CreateOrderFunction> logger)
+        public ProcessPatientFunction(IProcessPatientService service, IMapper mapper, ILogger<ProcessPatientFunction> logger)
         {
             _service = service;
             _mapper = mapper;
             _logger = logger;
         }
 
-        [FunctionName(nameof(CreateOrderFunction))]
+        [FunctionName(nameof(ProcessPatientFunction))]
         public async Task RunAsync([ServiceBusTrigger("%NewOrdersQueue%")]CreateOrderDto dto)
         {
             var request = _mapper.Map<CreateOrderRequest>(dto);

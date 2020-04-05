@@ -5,7 +5,7 @@ using FunkyHospital.Api.DataAccess.CommandHandlers;
 
 namespace FunkyHospital.Api.DataAccess.Commands
 {
-    public class CreateOrderCommand : ICommand
+    public class EnrollPatientCommand : ICommand
     {
         public string OrderId { get; set; }
         public string Name { get; set; }

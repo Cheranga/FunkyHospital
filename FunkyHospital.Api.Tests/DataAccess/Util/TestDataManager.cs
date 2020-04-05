@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using FunkyHospital.Api.DataAccess.CommandHandlers;
+using FunkyHospital.Api.DataAccess.Configs;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 
@@ -19,6 +20,11 @@ namespace FunkyHospital.Api.Tests.DataAccess.Util
             _table = storageAccount.CreateCloudTableClient().GetTableReference(databaseConfig.TableName);
             _table.CreateIfNotExistsAsync().Wait();
 
+        }
+
+        public TestDataManager() : this(new DatabaseConfig{ConnectionString = "UseDevelopmentStorage", TableName = "TestNewOrders"})
+        {
+            
         }
 
         public async Task UpsertAsync(params TEntity[] entities)

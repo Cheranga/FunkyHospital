@@ -3,6 +3,7 @@ using FluentValidation;
 using FunkyHospital.Api.Bootstrap;
 using FunkyHospital.Api.DataAccess.CommandHandlers;
 using FunkyHospital.Api.DataAccess.Commands;
+using FunkyHospital.Api.DataAccess.Configs;
 using FunkyHospital.Api.DTO;
 using FunkyHospital.Api.Mappers;
 using FunkyHospital.Api.Services;
@@ -35,7 +36,7 @@ namespace FunkyHospital.Api.Bootstrap
                 return;
             }
 
-            services.AddSingleton<ICommandHandler<CreateOrderCommand>, CreateOrderCommandHandler>();
+            services.AddSingleton<ICommandHandler<EnrollPatientCommand>, EnrollPatientCommandHandler>();
         }
 
         private void RegisterConfigurations(IServiceCollection services)
@@ -55,7 +56,7 @@ namespace FunkyHospital.Api.Bootstrap
                 return;
             }
 
-            services.AddSingleton<ICreateOrderService, CreateOrderService>();
+            services.AddSingleton<IProcessPatientService, ProcessPatientService>();
             services.AddSingleton<IGetOrderService, GetOrderService>();
         }
 
@@ -68,7 +69,7 @@ namespace FunkyHospital.Api.Bootstrap
 
             services.AddSingleton<IValidator<CreateOrderDto>, CreateOrderDtoValidator>();
             services.AddSingleton<IValidator<GetOrderDto>, GetOrderDtoValidator>();
-            services.AddSingleton<IValidator<CreateOrderCommand>, CreateOrderCommandValidator>();
+            services.AddSingleton<IValidator<EnrollPatientCommand>, CreateOrderCommandValidator>();
         }
 
         private void RegisterMappers(IServiceCollection services)

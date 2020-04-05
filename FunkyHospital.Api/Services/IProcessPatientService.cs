@@ -4,7 +4,7 @@ using FunkyHospital.Api.Models;
 
 namespace FunkyHospital.Api.Services
 {
-    public interface ICreateOrderService
+    public interface IProcessPatientService
     {
         Task<Result> CreateOrderAsync(CreateOrderRequest request);
     }

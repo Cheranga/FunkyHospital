@@ -3,7 +3,7 @@ using FunkyHospital.Api.DataAccess.Commands;
 
 namespace FunkyHospital.Api.Validators
 {
-    public class CreateOrderCommandValidator : ModelValidatorBase<CreateOrderCommand>
+    public class CreateOrderCommandValidator : ModelValidatorBase<EnrollPatientCommand>
     {
         public CreateOrderCommandValidator()
         {

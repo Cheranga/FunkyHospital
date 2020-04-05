@@ -16,20 +16,20 @@ using Microsoft.Extensions.Logging;
 
 namespace FunkyHospital.Api.Functions
 {
-    public class CreateOrderApiFunction
+    public class EnrollPatientFunction
     {
         private readonly IValidator<CreateOrderDto> _validator;
         private readonly IMapper _mapper;
-        private readonly ILogger<CreateOrderApiFunction> _logger;
+        private readonly ILogger<EnrollPatientFunction> _logger;
 
-        public CreateOrderApiFunction(IValidator<CreateOrderDto> validator, IMapper mapper, ILogger<CreateOrderApiFunction> logger)
+        public EnrollPatientFunction(IValidator<CreateOrderDto> validator, IMapper mapper, ILogger<EnrollPatientFunction> logger)
         {
             _validator = validator;
             _mapper = mapper;
             _logger = logger;
         }
         
-        [FunctionName(nameof(CreateOrderApiFunction))]
+        [FunctionName(nameof(EnrollPatientFunction))]
         public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "orders/create")]
             HttpRequest request,
             [ServiceBus("%NewOrdersQueue%")]IAsyncCollector<CreateOrderDto> orders)

@@ -10,13 +10,13 @@ using Microsoft.Extensions.Logging;
 
 namespace FunkyHospital.Api.Services
 {
-    public class CreateOrderService : ICreateOrderService
+    public class ProcessPatientService : IProcessPatientService
     {
-        private readonly ICommandHandler<CreateOrderCommand> _commandHandler;
+        private readonly ICommandHandler<EnrollPatientCommand> _commandHandler;
         private readonly IMapper _mapper;
-        private readonly ILogger<CreateOrderService> _logger;
+        private readonly ILogger<ProcessPatientService> _logger;
 
-        public CreateOrderService(ICommandHandler<CreateOrderCommand> commandHandler, IMapper mapper, ILogger<CreateOrderService> logger)
+        public ProcessPatientService(ICommandHandler<EnrollPatientCommand> commandHandler, IMapper mapper, ILogger<ProcessPatientService> logger)
         {
             _commandHandler = commandHandler;
             _mapper = mapper;
@@ -27,9 +27,9 @@ namespace FunkyHospital.Api.Services
         {
             try
             {
-                _logger.LogInformation($"{nameof(CreateOrderService)} started.");
+                _logger.LogInformation($"{nameof(ProcessPatientService)} started.");
 
-                var createOrderCommand = _mapper.Map<CreateOrderCommand>(request);
+                var createOrderCommand = _mapper.Map<EnrollPatientCommand>(request);
 
                 var operation = await _commandHandler.ExecuteAsync(createOrderCommand).ConfigureAwait(false);
 
@@ -49,7 +49,7 @@ namespace FunkyHospital.Api.Services
             }
             finally
             {
-                _logger.LogInformation($"{nameof(CreateOrderService)} finished.");
+                _logger.LogInformation($"{nameof(ProcessPatientService)} finished.");
             }
         }
     }

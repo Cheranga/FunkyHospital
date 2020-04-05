@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FunkyHospital.Api.DataAccess.CommandHandlers;
 using FunkyHospital.Api.DataAccess.Commands;
+using FunkyHospital.Api.DataAccess.Configs;
 using FunkyHospital.Api.DataAccess.Models;
 using FunkyHospital.Api.DTO;
 using FunkyHospital.Api.Mappers;
@@ -24,7 +25,7 @@ namespace FunkyHospital.Api.Tests.DataAccess
     [Story(AsA = "CreateOrderCommandHandler",
         IWant = "to save valid orders in the table storage",
         SoThat = "they can be used for processing later.")]
-    public class CreateOrderCommandHandlerTests : IDisposable
+    public class CreateOrderCommandHandlerTests : IDisposable, IClassFixture<TestFunctionRuntime>
     {
         private DatabaseConfig _databaseConfig;
         private readonly TestDataManager<OrderDataModel> _testDataManager;
@@ -32,8 +33,8 @@ namespace FunkyHospital.Api.Tests.DataAccess
         private IMapper _mapper;
         private CreateOrderRequest _createOrderRequest;
         private Result _operation;
-        private CreateOrderCommand _command;
-        private Mock<ILogger<CreateOrderCommandHandler>> _mockedLogger;
+        private EnrollPatientCommand _command;
+        private Mock<ILogger<EnrollPatientCommandHandler>> _mockedLogger;
 
         public CreateOrderCommandHandlerTests()
         {
@@ -49,7 +50,7 @@ namespace FunkyHospital.Api.Tests.DataAccess
             var mappingConfig = new MapperConfiguration(expression => { expression.AddProfile<MapperProfile>(); });
             _mapper = mappingConfig.CreateMapper();
 
-            _mockedLogger = new Mock<ILogger<CreateOrderCommandHandler>>();
+            _mockedLogger = new Mock<ILogger<EnrollPatientCommandHandler>>();
 
         }
 
@@ -171,8 +172,8 @@ namespace FunkyHospital.Api.Tests.DataAccess
 
         private async Task WhenCommandIsExecuted()
         {
-            _command = _mapper.Map<CreateOrderCommand>(_createOrderRequest);
-            var commandHandler = new CreateOrderCommandHandler(_databaseConfig, _validator, _mapper, _mockedLogger.Object);
+            _command = _mapper.Map<EnrollPatientCommand>(_createOrderRequest);
+            var commandHandler = new EnrollPatientCommandHandler(_databaseConfig, _validator, _mapper, _mockedLogger.Object);
             _operation = await commandHandler.ExecuteAsync(_command);
         }
 

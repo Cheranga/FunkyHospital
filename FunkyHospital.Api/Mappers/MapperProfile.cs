@@ -17,8 +17,8 @@ namespace FunkyHospital.Api.Mappers
         {
             CreateMap<CreateOrderDto, CreateOrderRequest>();
             CreateMap<GetOrderDto, GetOrderRequest>();
-            CreateMap<CreateOrderRequest, CreateOrderCommand>();
-            CreateMap<CreateOrderCommand, OrderDataModel>().AfterMap((source, target) =>
+            CreateMap<CreateOrderRequest, EnrollPatientCommand>();
+            CreateMap<EnrollPatientCommand, OrderDataModel>().AfterMap((source, target) =>
             {
                 var partitionKey = source.PostCode.ToUpper();
 

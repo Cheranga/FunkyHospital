@@ -18,4 +18,10 @@
     <ProjectReference Include="..\FunkyHospital.Api\FunkyHospital.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
