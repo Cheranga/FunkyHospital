@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using FunkyHospital.Api.Bootstrap;
+using Microsoft.Extensions.Hosting;
 
 namespace FunkyHospital.Api.Tests.DataAccess.Util
 {
@@ -12,24 +14,29 @@ namespace FunkyHospital.Api.Tests.DataAccess.Util
 
         public TestFunctionRuntime()
         {
-            var dotnetExePath = Environment.ExpandEnvironmentVariables(ConfigurationHelper.Settings.DotNetExecutablePath);
-            var functionHostPath = Environment.ExpandEnvironmentVariables(ConfigurationHelper.Settings.FunctionHostPath);
-            var functionAppFolder = Path.GetRelativePath(Directory.GetCurrentDirectory(), ConfigurationHelper.Settings.FunctionApplicationPath);
+            var startup = new Startup();
+            var host = new HostBuilder()
+                .ConfigureWebJobs(startup.Configure)
+                .Build();
 
-            _funcHostProcess = new Process
-            {
-                StartInfo =
-                {
-                    FileName = dotnetExePath,
-                    Arguments = $"\"{functionHostPath}\" start -p {Port}",
-                    WorkingDirectory = functionAppFolder
-                }
-            };
-            var success = _funcHostProcess.Start();
-            if (!success)
-            {
-                throw new InvalidOperationException("Could not start Azure Functions host.");
-            }
+            //var dotnetExePath = Environment.ExpandEnvironmentVariables(ConfigurationHelper.Settings.DotNetExecutablePath);
+            //var functionHostPath = Environment.ExpandEnvironmentVariables(ConfigurationHelper.Settings.FunctionHostPath);
+            //var functionAppFolder = Path.GetRelativePath(Directory.GetCurrentDirectory(), ConfigurationHelper.Settings.FunctionApplicationPath);
+
+            //_funcHostProcess = new Process
+            //{
+            //    StartInfo =
+            //    {
+            //        FileName = dotnetExePath,
+            //        Arguments = $"\"{functionHostPath}\" start -p {Port}",
+            //        WorkingDirectory = functionAppFolder
+            //    }
+            //};
+            //var success = _funcHostProcess.Start();
+            //if (!success)
+            //{
+            //    throw new InvalidOperationException("Could not start Azure Functions host.");
+            //}
 
             //
             // Starting the storage explorer if it hasn't started.
@@ -66,12 +73,12 @@ namespace FunkyHospital.Api.Tests.DataAccess.Util
 
         public void Dispose()
         {
-            if (!_funcHostProcess.HasExited)
-            {
-                _funcHostProcess.Kill();
-            }
+            //if (!_funcHostProcess.HasExited)
+            //{
+            //    _funcHostProcess.Kill();
+            //}
 
-            _funcHostProcess.Dispose();
+            //_funcHostProcess.Dispose();
         }
     }
 }
